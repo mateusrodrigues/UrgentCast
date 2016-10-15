@@ -7,10 +7,8 @@
 @{
     ViewData["Title"] = "Log in";
 }
-
-<div class="ui vertical stipe segment">
-    <div class="ui two column middle aligned very relaxed stackable grid centered" style="position:relative">
-        <div class="column">
+    <div class="ui two column middle aligned very relaxed stackable grid centered">
+        <div class="half wide column">
             <div class="ui form">
                 <h3 class="ui header centered">Local Account Log In</h3>
                 <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="ui large form validate-me" role="form" id="loginForm">
