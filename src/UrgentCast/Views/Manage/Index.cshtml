@@ -11,24 +11,35 @@
 }
 
 
-    <h3 class="ui header">Change your account settings</h3>
-<div class="ui segment">
-    <h4 class="ui header">Password</h4>
+<h3 class="ui header">Change your account settings</h3>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div class="ui blue segment">
+        <h4 class="ui header">Episodes Management</h4>
+        <div class="content">
+            <a href="#" class="ui labeled icon button"><i class="add icon" aria-hidden="true"></i> Add Episode</a>
+        </div>
+    </div>
+}
+
+<div class="ui green segment">
+    <h4 class="ui header">Account</h4>
     <div class="content">
         
-        [@if (Model.HasPassword)
+        @if (Model.HasPassword)
         {
-            <a asp-controller="Manage" asp-action="ChangePassword">Change</a>
+            <a asp-controller="Manage" asp-action="ChangePassword" class="ui labeled icon button"><i class="configure icon" aria-hidden="true"></i> Change Password</a>
         }
         else
         {
             <a asp-controller="Manage" asp-action="SetPassword">Create</a>
-        }]
+        }
     </div>
    
 </div>
 
-<div class="ui segment">
+<!--<div class="ui segment">
     <h4 class="ui header">
         External Logins
     </h4>
@@ -89,4 +100,4 @@
         </form>
     }
     </div>
-</div>
+</div>-->

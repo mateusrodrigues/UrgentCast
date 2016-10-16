@@ -1,3 +1,4 @@
+@model IEnumerable<UrgentCast.Models.Episode>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,9 +13,10 @@
         </div>
         <div class="six wide right floated column">
             <ul>
-                <li>Episodio</li>
-                <li>Episodio</li>
-                <li>Episodio</li>
+                @foreach (var episode in Model)
+                {
+                    <li>@episode.Title</li>
+                }
             </ul>
         </div>
     </div>
