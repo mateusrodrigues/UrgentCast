@@ -1,24 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using UrgentCast.Data;
 
-namespace UrgentCast.Data.Migrations
+namespace UrgentCast.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20161016202452_BaseSchema")]
+    partial class BaseSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                 .HasAnnotation("ProductVersion", "1.0.0-rc3")
-                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.0.1");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
@@ -38,7 +34,7 @@ namespace UrgentCast.Data.Migrations
                     b.HasIndex("NormalizedName")
                         .HasName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -57,7 +53,7 @@ namespace UrgentCast.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
@@ -76,7 +72,7 @@ namespace UrgentCast.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("Claims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
@@ -94,7 +90,7 @@ namespace UrgentCast.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
@@ -109,7 +105,7 @@ namespace UrgentCast.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<string>", b =>
@@ -124,7 +120,7 @@ namespace UrgentCast.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("UrgentCast.Models.ApplicationUser", b =>
@@ -173,7 +169,63 @@ namespace UrgentCast.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UrgentCast.Models.Episode", b =>
+                {
+                    b.Property<int>("EpisodeID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("Explicit");
+
+                    b.Property<int>("FeedID");
+
+                    b.Property<string>("MediaUrl");
+
+                    b.Property<DateTime>("PublishedAt");
+
+                    b.Property<string>("Subtitle");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("EpisodeID");
+
+                    b.HasIndex("FeedID");
+
+                    b.ToTable("Episodes");
+                });
+
+            modelBuilder.Entity("UrgentCast.Models.Feed", b =>
+                {
+                    b.Property<int>("FeedID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("Category");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("Explicit");
+
+                    b.Property<string>("ImageURL");
+
+                    b.Property<string>("Language");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("FeedID");
+
+                    b.ToTable("Feeds");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -210,6 +262,14 @@ namespace UrgentCast.Data.Migrations
                     b.HasOne("UrgentCast.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UrgentCast.Models.Episode", b =>
+                {
+                    b.HasOne("UrgentCast.Models.Feed", "Feed")
+                        .WithMany("Episodes")
+                        .HasForeignKey("FeedID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }
