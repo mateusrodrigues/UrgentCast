@@ -1,0 +1,40 @@
+@model IEnumerable<UrgentCast.Models.Episode>
+@{
+    ViewData["Title"] = "Episodes";
+}
+
+<h2>Episodes</h2>
+<a class="ui labeled icon button" onclick="window.history.back()"><i class="arrow left icon"></i> Go Back</a>
+<a asp-controller="Episodes" asp-action="Create" class="ui labeled icon button"><i class="add icon"></i> Add Episode</a>
+
+<table class="ui celled padded table">
+    <thead>
+        <tr>
+            <th class="single line">Episode ID</th>
+            <th>Title</th>
+            <th>Subtitle</th>
+            <th>Date/Time</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var episode in Model)
+    {
+        <tr>
+            <td>
+                <h2 class="ui center aligned header">@episode.EpisodeID</h2>
+            </td>
+            <td class="single line">
+                @episode.Title
+            </td>
+            <td>
+                @episode.Subtitle
+            </td>
+            <td class="right aligned">
+                @episode.PublishedAt
+            </td>
+            <td>@episode.Description</td>
+        </tr>
+    }
+    </tbody>
+</table>
