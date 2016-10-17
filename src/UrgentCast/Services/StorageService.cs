@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
@@ -5,19 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UrgentCast.Helpers
+namespace UrgentCast.Services
 {
-    public static class StorageHelper
+    public class StorageService : IStorageService
     {
-        private static CloudBlobContainer _container;
+        private CloudBlobContainer _container;
 
-        private static readonly string CONTAINER_NAME = "urgentcast";
-        private static readonly string EPISODES_FOLDER = "episodes";
+        private readonly string CONTAINER_NAME = "urgentcast";
+        private readonly string EPISODES_FOLDER = "episodes";
+        private readonly IConfiguration _configuration;
 
-        private static void Connect()
+        public StorageService (IConfiguration configuration)
         {
+            _configuration = configuration;
+            Connect();
+        }
+
+        private void Connect()
+        {
+            // Gets the connection string
+            var connString = _configuration["URGENTCAST_STORAGE"];
             // Connect to the storage account using the provided connection string
-            CloudStorageAccount account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("URGENTCAST_STORAGECONNSTRING"));
+            CloudStorageAccount account = CloudStorageAccount.Parse(connString);
             // Create a client to deal with Blob Storage
             CloudBlobClient client = account.CreateCloudBlobClient();
             // Reference the container related to UrgentCast's storage
@@ -34,7 +44,7 @@ namespace UrgentCast.Helpers
             }
         }
 
-        public static IEnumerable<IListBlobItem> ListEpisodes(int maxResults = 5000)
+        public IEnumerable<IListBlobItem> ListEpisodes(int maxResults = 5000)
         {
             // Instantiate the container reference in case it's first-time access
             if (_container == null)
@@ -61,7 +71,7 @@ namespace UrgentCast.Helpers
             return episodes;
         }
 
-        private async static Task<IEnumerable<IListBlobItem>> ListBlobsSegmentedInFlatListingAsync(int maxResults = 5000)
+        private async Task<IEnumerable<IListBlobItem>> ListBlobsSegmentedInFlatListingAsync(int maxResults = 5000)
         {
             BlobContinuationToken continuationToken = null;
             BlobResultSegment resultSegment = null;

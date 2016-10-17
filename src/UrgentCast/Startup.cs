@@ -21,6 +21,7 @@ namespace UrgentCast
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
+                .AddEnvironmentVariables("URGENTCAST_")
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
@@ -50,8 +51,10 @@ namespace UrgentCast
             services.AddMvc();
 
             // Add application services.
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IStorageService, StorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
