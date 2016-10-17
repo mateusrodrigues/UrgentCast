@@ -21,8 +21,10 @@
   font-size: 1.7em;
   font-weight: normal;
 }
-.ui.inverted.segment, .ui.primary.inverted.segment
-{
+.ui.secondary.inverted.pointing.menu {
+  border-color: rgba(0, 0, 0, 0);
+}
+.ui.inverted.segment, .ui.primary.inverted.segment {
   background-image: url("/images/header.jpg");
 }
 .ui.vertical.stripe {

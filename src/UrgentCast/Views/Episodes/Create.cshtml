@@ -1,9 +1,54 @@
+@model UrgentCast.Models.EpisodesViewModels.AddEpisodeViewModel
 @{
     ViewData["Title"] = "Add Episode";
 }
 
 <h2>Add Episode</h2>
 
-<form asp-action="Create" class="ui form">
-    
+<div asp-validation-summary="All" class="ui error message"></div>
+<form asp-action="Create" class="ui form validate-me">
+    <div class="fields">
+        <div class="eight wide required field">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" />
+        </div>
+        <div class="eight wide required field">
+            <label asp-for="Subtitle"></label>
+            <input asp-for="Subtitle" />
+        </div>
+    </div>
+    <div class="fields">
+        <div class="sixteen wide required field">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="fields">
+        <div class="ten wide required field">
+            <label asp-for="MediaUrl"></label>
+            <select asp-for="MediaUrl" asp-items="@ViewBag.MediaUrl"></select>
+        </div>
+        <div class="six wide required disabled field">
+            <label asp-for="Author"></label>
+            <input asp-for="Author" value="UrgentCast" />
+        </div>
+    </div>
+    <div class="fields">
+        <div class="sixteen wide field">
+            <div class="ui toggle checkbox">
+                <input asp-for="Explicit" tabindex="0" class="hidden">
+                <label asp-for="Explicit"></label>
+            </div>
+        </div>
+    </div>
+    <a class="ui labeled icon orange button" onclick="window.history.back()"><i class="arrow left icon" aria-hidden="true"></i> Cancel</a>
+    <div class="ui buttons">
+        <button type="reset" class="ui button">Reset</button>
+        <div class="or"></div>
+        <button type="submit" class="ui positive button">Save</button>
+    </div>
 </form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
