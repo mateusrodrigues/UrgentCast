@@ -44,7 +44,7 @@ namespace UrgentCast.Services
             }
         }
 
-        public IEnumerable<IListBlobItem> ListEpisodes(int maxResults = 5000)
+        public IEnumerable<CloudBlockBlob> ListEpisodes(int maxResults = 5000)
         {
             // Instantiate the container reference in case it's first-time access
             if (_container == null)
@@ -52,11 +52,18 @@ namespace UrgentCast.Services
                 Connect();
             }
 
-            IEnumerable<IListBlobItem> episodes;
+            List<CloudBlockBlob> episodes = new List<CloudBlockBlob>();
             try
             {
-                // TODO : Figure out type casting to CloudBlockBlob
-                episodes = ListBlobsSegmentedInFlatListingAsync(maxResults).Result.ToList();
+                // TODO : Figure out type casting to CloudBlockBlob : DONE
+                // TODO : Parallel add to maximize speed
+                // episodes = ListBlobsSegmentedInFlatListingAsync(maxResults).Result.ToList();
+                ListBlobsSegmentedInFlatListingAsync(maxResults).Result.ToList()
+                    .ForEach(b =>
+                    {
+                        CloudBlockBlob item = (CloudBlockBlob) b;
+                        episodes.Add(item);
+                    });
                 // episodes = episodes.Where(m => m.Name.Split('.')[1].Equals("mp3")).ToList();
             }
             catch (NullReferenceException)

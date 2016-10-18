@@ -8,6 +8,6 @@ namespace UrgentCast.Services
 {
     public interface IStorageService
     {
-        IEnumerable<IListBlobItem> ListEpisodes(int maxResults = 5000);
+        IEnumerable<CloudBlockBlob> ListEpisodes(int maxResults = 5000);
     }
 }

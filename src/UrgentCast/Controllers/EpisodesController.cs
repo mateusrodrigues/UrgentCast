@@ -35,7 +35,7 @@ namespace UrgentCast.Controllers
         public IActionResult Create()
         {
             var files = _storage.ListEpisodes();
-            ViewBag.MediaUrl = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(files);
+            ViewBag.MediaUrl = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(files, "Name", "Uri");
 
             return View();
         }
