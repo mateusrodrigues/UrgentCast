@@ -58,12 +58,9 @@ namespace UrgentCast.Services
                 // TODO : Figure out type casting to CloudBlockBlob : DONE
                 // TODO : Parallel add to maximize speed
                 // episodes = ListBlobsSegmentedInFlatListingAsync(maxResults).Result.ToList();
-                ListBlobsSegmentedInFlatListingAsync(maxResults).Result.ToList()
-                    .ForEach(b =>
-                    {
-                        CloudBlockBlob item = (CloudBlockBlob) b;
-                        episodes.Add(item);
-                    });
+                episodes = ListBlobsSegmentedInFlatListingAsync(maxResults).Result
+                    .OrderByDescending(b => b.Properties.LastModified)
+                    .ToList();
                 // episodes = episodes.Where(m => m.Name.Split('.')[1].Equals("mp3")).ToList();
             }
             catch (NullReferenceException)
@@ -78,11 +75,11 @@ namespace UrgentCast.Services
             return episodes;
         }
 
-        private async Task<IEnumerable<IListBlobItem>> ListBlobsSegmentedInFlatListingAsync(int maxResults = 5000)
+        private async Task<IEnumerable<CloudBlockBlob>> ListBlobsSegmentedInFlatListingAsync(int maxResults = 5000)
         {
             BlobContinuationToken continuationToken = null;
             BlobResultSegment resultSegment = null;
-            IEnumerable<IListBlobItem> result = null;
+            IEnumerable<IListBlobItem> blobs = null;
 
             // Call ListBlobsSegmentedAsync and enumerate the result segment returned, while the continuation token is non-null.
             // When the continuation token is null, the last page has been returned and execution can exit the loop.
@@ -95,13 +92,23 @@ namespace UrgentCast.Services
 
                 if (resultSegment.Results.Count<IListBlobItem>() > 0)
                 {
-                    result = resultSegment.Results;
+                    blobs = resultSegment.Results;
                 }
 
                 // Get the continuation token
                 continuationToken = resultSegment.ContinuationToken;
             }
             while (continuationToken != null);
+
+            var result = new List<CloudBlockBlob>();
+
+            // Insert the blobs list in a parallel way to the result list
+            var task = Parallel.ForEach(blobs.ToList(), b =>
+            {
+                result.Add((CloudBlockBlob) b);
+            });
+            // Wait until task is completed
+            while (!task.IsCompleted);
 
             return result;
         }
