@@ -1,0 +1,40 @@
+@model IEnumerable<UrgentCast.Models.Feed>
+@{
+    ViewData["Title"] = "Feeds";
+}
+
+<h2>Feeds</h2>
+<a asp-controller="Manage" asp-action="Index" class="ui labeled icon primary button"><i class="arrow left icon"></i> Go Back</a>
+<a asp-controller="Feeds" asp-action="Create" class="ui labeled icon positive button"><i class="add icon"></i> Add Feed</a>
+
+<table class="ui celled padded table">
+    <thead>
+        <tr>
+            <th class="single line">Feed ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Episodes</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var feed in Model)
+    {
+        <tr>
+            <td>
+                <h2 class="ui center aligned header">@feed.FeedID</h2>
+            </td>
+            <td class="single line">
+                @feed.Title
+            </td>
+            <td>
+                @feed.Description
+            </td>
+            <td class="right aligned">
+                @feed.Category
+            </td>
+            <td>@feed.Episodes.Count()</td>
+        </tr>
+    }
+    </tbody>
+</table>

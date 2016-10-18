@@ -1,9 +1,9 @@
-@model UrgentCast.Models.EpisodesViewModels.AddEpisodeViewModel
+@model UrgentCast.Models.FeedsViewModels.AddFeedViewModel
 @{
-    ViewData["Title"] = "Add Episode";
+    ViewData["Title"] = "Add Feed";
 }
 
-<h2>Add Episode</h2>
+<h2>Add Feed</h2>
 
 <div asp-validation-summary="All" class="ui error message"></div>
 <form asp-action="Create" class="ui form validate-me">
@@ -13,8 +13,8 @@
             <input asp-for="Title" />
         </div>
         <div class="eight wide required field">
-            <label asp-for="Subtitle"></label>
-            <input asp-for="Subtitle" />
+            <label asp-for="Author"></label>
+            <input asp-for="Author" />
         </div>
     </div>
     <div class="fields">
@@ -24,19 +24,27 @@
         </div>
     </div>
     <div class="fields">
-        <div class="sixteen wide required field">
-            <label asp-for="FeedID"></label>
-            <select asp-for="FeedID" asp-items="@ViewBag.FeedID" class="ui search dropdown"></select>
+        <div class="ten wide required field">
+            <label asp-for="Link"></label>
+            <input asp-for="Link" />
+        </div>
+        <div class="six wide required field">
+            <label asp-for="Category"></label>
+            <input asp-for="Category" />
         </div>
     </div>
     <div class="fields">
-        <div class="ten wide required field">
-            <label asp-for="MediaUrl"></label>
-            <select asp-for="MediaUrl" asp-items="@ViewBag.MediaUrl" class="ui search dropdown"></select>
+        <div class="four wide required field">
+            <label asp-for="Language"></label>
+            <input asp-for="Language" />
         </div>
-        <div class="six wide required disabled field">
-            <label asp-for="Author"></label>
-            <input asp-for="Author" value="UrgentCast" />
+        <div class="five wide required field">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
+        </div>
+        <div class="seven wide required field">
+            <label asp-for="ImageURL"></label>
+            <input asp-for="ImageURL" />
         </div>
     </div>
     <div class="fields">

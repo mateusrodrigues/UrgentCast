@@ -1,29 +1,38 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace UrgentCast.Models.EpisodesViewModels
+namespace UrgentCast.Models.FeedsViewModels
 {
-    public class AddEpisodeViewModel
+    public class AddFeedViewModel
     {
         [Required]
         public string Title { get; set; }
 
         [Required]
-        public string Subtitle { get; set; }
+        [Url]
+        public string Link { get; set; }
 
         [Required]
         public string Description { get; set; }
 
         [Required]
-        public string MediaUrl { get; set; }
+        public string Language { get; set; }
 
         [Required]
         public string Author { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         public bool Explicit { get; set; }
 
         [Required]
-        public int FeedID { get; set; }
+        [Url]
+        public string ImageURL { get; set; }
+
+        [Required]
+        public string Category { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 }
 
 <h2>Episodes</h2>
-<a class="ui labeled icon primary button" onclick="window.history.back()"><i class="arrow left icon"></i> Go Back</a>
+<a asp-controller="Manage" asp-action="Index" class="ui labeled icon primary button"><i class="arrow left icon"></i> Go Back</a>
 <a asp-controller="Episodes" asp-action="Create" class="ui labeled icon positive button"><i class="add icon"></i> Add Episode</a>
 
 <table class="ui celled padded table">
@@ -15,6 +15,7 @@
             <th>Subtitle</th>
             <th>Date/Time</th>
             <th>Description</th>
+            <th>Feed</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +35,7 @@
                 @episode.PublishedAt
             </td>
             <td>@episode.Description</td>
+            <td>@episode.Feed.Title</td>
         </tr>
     }
     </tbody>

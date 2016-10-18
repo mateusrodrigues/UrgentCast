@@ -16,6 +16,13 @@
 @if (User.IsInRole("Administrator"))
 {
     <div class="ui blue segment">
+        <h4 class="ui header">Feeds Management</h4>
+        <div class="content">
+            <a asp-controller="Feeds" asp-action="Index" class="ui labeled icon button"><i class="list icon"></i> List Feeds</a>
+            <a asp-controller="Feeds" asp-action="Create" class="ui labeled icon positive button"><i class="add icon" aria-hidden="true"></i> Add Feed</a>
+        </div>
+    </div>
+    <div class="ui blue segment">
         <h4 class="ui header">Episodes Management</h4>
         <div class="content">
             <a asp-controller="Episodes" asp-action="Index" class="ui labeled icon button"><i class="list icon"></i> List Episodes</a>
