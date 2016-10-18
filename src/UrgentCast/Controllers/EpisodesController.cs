@@ -28,8 +28,13 @@ namespace UrgentCast.Controllers
             _storage = storage;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string message)
         {
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.Message = message;
+            }
+
             var model = _context.Episodes
                 .Include(p => p.Feed)
                 .OrderByDescending(p => p.PublishedAt)
@@ -69,7 +74,7 @@ namespace UrgentCast.Controllers
                 _context.Episodes.Add(episode);
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(ManageController.Index));
+                return RedirectToAction(nameof(ManageController.Index), new { message = "Episode created" });
             }
 
             return View(model);

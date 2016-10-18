@@ -23,8 +23,13 @@ namespace UrgentCast.Controllers
             _context = context;    
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string message)
         {
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.Message = message;
+            }
+
             var feeds = _context.Feeds
                 .Include(p => p.Episodes)
                 .ToList();
@@ -58,7 +63,7 @@ namespace UrgentCast.Controllers
                 _context.Feeds.Add(feed);
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(ManageController.Index));
+                return RedirectToAction(nameof(ManageController.Index), new { message = "Feed created" });
             }
 
             return View(model);

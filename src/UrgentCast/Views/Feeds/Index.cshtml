@@ -7,6 +7,17 @@
 <a asp-controller="Manage" asp-action="Index" class="ui labeled icon primary button"><i class="arrow left icon"></i> Go Back</a>
 <a asp-controller="Feeds" asp-action="Create" class="ui labeled icon positive button"><i class="add icon"></i> Add Feed</a>
 
+@if (ViewData["Message"] != null)
+{
+    if (!string.IsNullOrEmpty(ViewData["Message"].ToString()))
+    {
+        <div class="ui success message">
+            <div class="header">Sucesso!</div>
+            <h5>@ViewBag.Message</h5>
+        </div>
+    }
+}
+
 <table class="ui celled padded table">
     <thead>
         <tr>
