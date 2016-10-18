@@ -74,5 +74,21 @@ namespace UrgentCast.Controllers
 
             return View(model);
         }
+
+        public IActionResult Delete(int id)
+        {
+            var episode = _context.Episodes.FirstOrDefault(e => e.EpisodeID == id);
+
+            return View(episode);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Episode episode)
+        {
+            _context.Episodes.Remove(episode);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(EpisodesController.Index));
+        }
     }
 }

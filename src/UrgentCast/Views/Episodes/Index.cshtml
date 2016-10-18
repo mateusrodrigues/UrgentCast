@@ -16,6 +16,7 @@
             <th>Date/Time</th>
             <th>Description</th>
             <th>Feed</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,11 @@
             </td>
             <td>@episode.Description</td>
             <td>@episode.Feed.Title</td>
+            <td>
+                <a asp-controller="Episodes" asp-action="Delete" asp-route-id="@episode.EpisodeID" class="ui icon negative button">
+                    <i class="trash icon"></i>
+                </a>
+            </td>
         </tr>
     }
     </tbody>

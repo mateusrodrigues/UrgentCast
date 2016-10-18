@@ -1,0 +1,17 @@
+@model UrgentCast.Models.Episode
+@{
+    ViewData["Title"] = "Delete " + Model.Title;
+}
+
+<!--<h5 class="ui attached header">Delete @Model.Title</h5>-->
+<div class="ui red segment">
+    <h4>Delete @Model.Title</h4>
+    <div class="ui divider"></div>
+    <p>
+        Tem certeza que deseja deletar o episódio @Model.Title?
+    </p>
+    <form asp-action="Delete" class="ui form">
+        <input type="hidden" asp-for="EpisodeID" />
+        <button type="submit" class="ui submit button">Confirm</button>
+    </form>
+</div>
