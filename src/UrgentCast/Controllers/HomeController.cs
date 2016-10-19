@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UrgentCast.Data;
 
 namespace UrgentCast.Controllers
@@ -18,12 +19,11 @@ namespace UrgentCast.Controllers
 
         public IActionResult Index()
         {
-            var model = _context.Episodes
-                .OrderByDescending(p => p.PublishedAt)
-                .Take(5)
+            var feeds = _context.Feeds
+                .Include(p => p.Episodes)
                 .ToList();
 
-            return View(model);
+            return View(feeds);
         }
 
         public IActionResult About()
