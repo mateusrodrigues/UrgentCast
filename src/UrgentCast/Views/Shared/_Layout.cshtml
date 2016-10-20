@@ -13,12 +13,14 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
+        <link rel="stylesheet" href="~/lib/plyr/dist/plyr.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://oss.maxcdn.com/semantic-ui/2.1.8/semantic.min.css"
               asp-fallback-href="~/lib/semantic/dist/semantic.min.css"
               asp-fallback-test-class="ui button" asp-fallback-test-property="cursor" asp-fallback-test-value="pointer" />
+        <link rel="stylesheet" href="https://cdn.plyr.io/2.0.7/plyr.css">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
@@ -102,6 +104,7 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/semantic/dist/semantic.js"></script>
+        <script src="~/lib/plyr/dist/plyr.js"></script>
         <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -113,6 +116,7 @@
                 asp-fallback-src="~/lib/semantic/dist/semantic.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
+        <script src="https://cdn.plyr.io/2.0.7/plyr.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
@@ -120,24 +124,22 @@
 </body>
 </html>
 <script>
-    $(document)
-    .ready(function() {
+    $(document).ready(function() {
         // fix menu when passed
-        $('.masthead')
-        .visibility({
+        $('.masthead').visibility({
             once: false,
             onBottomPassed: function() {
-            $('.fixed.menu').transition('fade in');
+                $('.fixed.menu').transition('fade in');
             },
             onBottomPassedReverse: function() {
-            $('.fixed.menu').transition('fade out');
+                $('.fixed.menu').transition('fade out');
             }
-        })
-        ;
+        });
         // create sidebar and attach to menu open
         $('.ui.sidebar')
-        .sidebar('attach events', '.toc.item')
-        ;
-    })
-    ;
+            .sidebar('attach events', '.toc.item');
+
+        // Setup plyr
+        plyr.setup();
+    });
 </script>
