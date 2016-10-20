@@ -8,6 +8,8 @@ namespace UrgentCast.Models
     public class Episode
     {
         public int EpisodeID { get; set; }
+        public int ShowNumber { get; set; }
+        public string ThumbnailUrl { get; set; }
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Description { get; set; }

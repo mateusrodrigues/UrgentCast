@@ -12,6 +12,10 @@ namespace UrgentCast.Models.EpisodesViewModels
         public string Subtitle { get; set; }
 
         [Required]
+        [Url]
+        public string ThumbnailUrl { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
         [Required]

@@ -24,9 +24,13 @@
         </div>
     </div>
     <div class="fields">
-        <div class="sixteen wide required field">
+        <div class="six wide required field">
             <label asp-for="FeedID"></label>
             <select asp-for="FeedID" asp-items="@ViewBag.FeedID" class="ui search dropdown"></select>
+        </div>
+        <div class="ten wide required field">
+            <label asp-for="ThumbnailUrl"></label>
+            <input asp-for="ThumbnailUrl">
         </div>
     </div>
     <div class="fields">

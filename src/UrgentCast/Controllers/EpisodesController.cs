@@ -59,6 +59,23 @@ namespace UrgentCast.Controllers
         {
             if (ModelState.IsValid)
             {
+                int lastEpisode;
+                
+                // Get the show number of latest episode.
+                // If this is the first, then catch the NullReference exception
+                // and assign the value to 1.
+                try
+                {
+                    lastEpisode = _context.Episodes
+                        .OrderByDescending(e => e.PublishedAt)
+                        .FirstOrDefault()
+                        .ShowNumber;
+                }
+                catch (NullReferenceException)
+                {
+                    lastEpisode = 0;
+                }
+
                 var episode = new Episode
                 {
                     Title = model.Title,
@@ -68,7 +85,9 @@ namespace UrgentCast.Controllers
                     Author = model.Author,
                     Explicit = model.Explicit,
                     PublishedAt = DateTime.UtcNow.AddHours(LOCAL_TIMEZONE),
-                    FeedID = model.FeedID
+                    FeedID = model.FeedID,
+                    ShowNumber = lastEpisode + 1,
+                    ThumbnailUrl = model.ThumbnailUrl
                 };
 
                 _context.Episodes.Add(episode);
@@ -76,6 +95,13 @@ namespace UrgentCast.Controllers
 
                 return RedirectToAction(nameof(ManageController.Index), new { message = "Episode created" });
             }
+
+            // Code below is run upon error
+            var files = _storage.ListEpisodes();
+            var feeds = _context.Feeds.ToList();
+
+            ViewBag.MediaUrl = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(files, "Uri", "Name");
+            ViewBag.FeedID = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(feeds, "FeedID", "Title");
 
             return View(model);
         }

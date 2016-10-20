@@ -3,6 +3,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@await Component.InvokeAsync("LatestEpisode")
+
 @foreach (var feed in Model)
 {
     <h2 class="ui header">
@@ -10,13 +12,13 @@
         <div class="content">@feed.Title</div>
     </h2>
 
-    <div class="ui cards">
+    <div class="ui three stackable cards">
         @foreach (var episode in feed.Episodes)
         {
             <div class="card">
                 <div class="content">
                     <div class="header">
-                        @episode.Title
+                        @episode.ShowNumber - @episode.Title
                     </div>
                     <div class="meta">
                         @episode.PublishedAt
@@ -32,7 +34,7 @@
                 <div class="extra content">
                     <audio controls="controls">
                         <source src="@episode.MediaUrl" type="audio/mpeg">
-                        Your browser does not support audio
+                        Your browser does not support audio. You can still download the show though!
                     </audio>
                 </div>
             </div>

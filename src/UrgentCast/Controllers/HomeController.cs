@@ -21,7 +21,17 @@ namespace UrgentCast.Controllers
         {
             var feeds = _context.Feeds
                 .Include(p => p.Episodes)
+                .OrderBy(p => p.Title)
                 .ToList();
+            
+            feeds.ForEach(f => 
+            {
+                // Order the episodes in descending order of publication date
+                f.Episodes = f.Episodes
+                    .OrderByDescending(e => e.PublishedAt)
+                    .Take(20)
+                    .ToList();
+            });
 
             return View(feeds);
         }
