@@ -20,8 +20,7 @@ namespace UrgentCast
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddEnvironmentVariables("URGENTCAST_")
+                .SetBasePath(env.ContentRootPath)                
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
@@ -31,7 +30,7 @@ namespace UrgentCast
                 builder.AddUserSecrets();
             }
 
-            builder.AddEnvironmentVariables();
+            builder.AddEnvironmentVariables(); // Add all environment variables.
             Configuration = builder.Build();
         }
 
@@ -41,8 +40,19 @@ namespace UrgentCast
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            // If environment is development, use SQLite.
+            // If not, use SQL Server.
+            if (Configuration["ASPNETCORE_ENVIRONMENT"].Equals("Development"))
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            }
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
