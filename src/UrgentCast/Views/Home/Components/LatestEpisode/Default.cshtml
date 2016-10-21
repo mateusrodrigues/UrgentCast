@@ -1,22 +1,25 @@
 @model UrgentCast.Models.Episode
 
-<div class="ui piled segment">
-    <h3 class="ui header">Latest Episode</h3>
-    <div class="ui stackable grid container">
-        <div class="four wide column">
-            <img class="ui medium rounded image" src="@Model.ThumbnailUrl">
-        </div>
-        <div class="twelve wide column">
-            <h2 class="ui header">@Model.Title</h2>
-            <div class="ui divider"></div>
-            <h5 class="ui header">@Model.Subtitle</h5>
-            <p>
-                @Model.Description
-            </p>
-            <audio controls="controls">
-                <source src="@Model.MediaUrl" type="audio/mpeg">
-                Your browser does not support audio. You can still download the show though!
-            </audio>
+@if (Model != null)
+{
+    <div class="ui piled segment">
+        <h3 class="ui header">Latest Episode</h3>
+        <div class="ui stackable grid container">
+            <div class="four wide column">
+                <img class="ui medium rounded image" src="@Model.ThumbnailUrl">
+            </div>
+            <div class="twelve wide column">
+                <h2 class="ui header">@Model.Title</h2>
+                <div class="ui divider"></div>
+                <h5 class="ui header">@Model.Subtitle</h5>
+                <p>
+                    @Model.Description
+                </p>
+                <audio controls="controls">
+                    <source src="@Model.MediaUrl" type="audio/mpeg">
+                    Your browser does not support audio. You can still download the show though!
+                </audio>
+            </div>
         </div>
     </div>
-</div>
+}
