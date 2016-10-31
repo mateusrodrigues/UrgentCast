@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UrgentCast.Configuration;
 using UrgentCast.Data;
 using UrgentCast.Models;
 using UrgentCast.Services;
@@ -65,6 +66,11 @@ namespace UrgentCast
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<IStorageService, StorageService>();
+
+            // Add IdentityServer
+            services.AddDeveloperIdentityServer()
+                .AddInMemoryScopes(Scopes.GetScopes())
+                .AddInMemoryClients(Clients.GetClients());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,6 +95,8 @@ namespace UrgentCast
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

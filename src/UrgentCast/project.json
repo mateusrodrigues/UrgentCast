@@ -3,6 +3,7 @@
 
   "dependencies": {
     "BundlerMinifier.Core": "2.2.281",
+    "IdentityServer4": "1.0.0-rc2",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
@@ -73,6 +74,7 @@
        }
      }
     }
+    // "net461": {}
   },
 
   "buildOptions": {
