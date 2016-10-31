@@ -61,19 +61,18 @@
   },
 
   "frameworks": {
-    //"netcoreapp1.0": {
-    //  "imports": [
-    //    "dotnet5.6",
-    //    "portable-net45+win8"
-    //  ],
-    //  "dependencies": {
-    //    "Microsoft.NETCore.App": {
-    //      "type": "platform",
-    //      "version": "1.0.1"
-    //    }
-    //  }
-    //}
-    "net461": {}
+    "netcoreapp1.0": {
+     "imports": [
+       "dotnet5.6",
+       "portable-net45+win8"
+     ],
+     "dependencies": {
+       "Microsoft.NETCore.App": {
+         "type": "platform",
+         "version": "1.0.1"
+       }
+     }
+    }
   },
 
   "buildOptions": {

@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UrgentCast.Data;
-using UrgentCast.Engines;
-using System.ServiceModel.Syndication;
 
 namespace UrgentCast.Controllers
 {
@@ -50,18 +48,6 @@ namespace UrgentCast.Controllers
             ViewData["Message"] = "Your contact page.";
 
             return View();
-        }
-
-        public SyndicationFeedResult Feed(int id)
-        {
-            var feed = _context.Feeds
-                .Include(p => p.Episodes)
-                .FirstOrDefault(p => p.FeedID == id);
-
-            var rssFeed = new SyndicationFeed();
-            rssFeed = FeedEngine.GenerateFeed(feed);
-
-            return new SyndicationFeedResult(rssFeed);
         }
 
         public IActionResult Error()
