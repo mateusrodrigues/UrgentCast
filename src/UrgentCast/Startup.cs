@@ -90,6 +90,18 @@ namespace UrgentCast
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Configure API protection
+            // This piece contains code to configure all the realm of the application beyond
+            // the /api endpoint.
+            app.MapWhen(context => context.Request.Path.Value.StartsWith("/api"), builder =>
+            {
+                app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+                {
+                    Authority = Constants.GetIdentityUrl(env.EnvironmentName),
+                    ScopeName = "feed",
+                });
+            });
+
             app.UseStaticFiles();
 
             app.UseIdentity();
